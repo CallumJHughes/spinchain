@@ -9,9 +9,15 @@ import subprocess
 #GET TARGET QUBIT LABEL FROM custom_string VARIABLE WRITTEN TO genetic.out FILE
 gen = subprocess.check_output("sed -n '23p' genetic.out", shell=True)
 
+target = ""
+
 for char in range(len(gen)):
 	if gen[char] == 124: # Checks for '|' symbol using ASCII code
-		target = chr(gen[char+1]) # Character after '|' is target qubit label. Also converts ASCII code to char using chr() function
+		while gen[char] != 62:
+			target = target + chr(gen[char+1]) # Character after '|' is target qubit label. Also converts ASCII code to char using chr() function
+			char += 1
+			if gen[char+1] == 62:
+				break
 	else:
 		continue
 
@@ -90,7 +96,8 @@ y2 = (np.absolute(final))**2
 # for i in range(len(x)):
     # print(x[i], y1[i], y2[i])
 plt.plot(x,y1,color='gray',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{o}\rangle|^2$')
-plt.plot(x,y2,color='black',ls=':',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{subscript}\rangle|^2$'.format(subscript=target))
+psistring = "psi_{" + target + "}"
+plt.plot(x,y2,color='black',ls=':',lw=2,label=fr'$|\langle\Psi(t)\vert \{psistring}\rangle|^2$')
 
 #SET SIZE OF AXIS TICKS
 ax1.tick_params(axis='y', labelsize=20)
