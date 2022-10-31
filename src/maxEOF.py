@@ -14,7 +14,7 @@ with open(sys.argv[1]) as f:
             lines.append(float(cols[1])) #append second column (first is time) as list
 
 total_real = int(sys.argv[2])
-lines_per_test = len(lines)/total_real #number of points the dynamics
+lines_per_test = int(len(lines)/total_real) #number of points the dynamics
 
 maxval=[]
 

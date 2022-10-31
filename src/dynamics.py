@@ -80,7 +80,7 @@ y2 = (np.absolute(final))**2
 # for i in range(len(x)):
     # print(x[i], y1[i], y2[i])
 plt.plot(x,y1,color='gray',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{o}\rangle|^2$')
-plt.plot(x,y2,color='black',ls=':',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{A}\rangle|^2$')
+plt.plot(x,y2,color='black',ls=':',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{A}\rangle|^2$') ##### target state
 
 #SET SIZE OF AXIS TICKS
 ax1.tick_params(axis='y', labelsize=20)

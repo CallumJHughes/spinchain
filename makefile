@@ -4,19 +4,19 @@ plot = src/Plotting
 bin = bin
 
 # Define variables
-wrapper = $(bin)/wrapper.o  
-main = $(src)/main.f90  
-gen = $(src)/genetic.f90  
+wrapper = $(bin)/wrapper.o
+main = $(src)/main.f90
+gen = $(src)/genetic.f90
 const = $(src)/CONSTANTS.f90
 param = $(src)/PARAMETERS.f90
 depen = $(src)/DEPENDENCIES.f90
 
-# Compilers 
+# Compilers
 f90comp = mpifort
 Pycomp = python3
 
 # Libraries
-libs = -lopenblas
+libs = -lblas -llapack
 
 # Install directory
 installDir = "/usr/share/spinnet"
@@ -74,7 +74,7 @@ $(bin)/wrapper.o: $(src)/wrapper.f90
 	$(f90comp) -c $(main) -o $(bin)/m.o $(flags) $(libs)
 	$(f90comp) -c $(gen) -o $(bin)/g.o $(flags) $(libs)
 	$(f90comp) -c $^ -o $@ $(flags)
-	
+
 # Clean
 clean:
 	rm -f run 

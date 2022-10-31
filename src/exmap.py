@@ -16,13 +16,13 @@ def Colormap(ax,lst):
 
     #STRUCTURE DATA FOR COLORMAP
     intensity = np.array(lst[:,1:])
-    
+
     x, y = intensity.shape
-    
+
     x1 = lst[:,0]
-    y1 = range(0,y+1)
+    y1 = range(0,y)
     x2,y2 = np.meshgrid(x1,y1)
-    
+
     #COLORMAP
     mappable = plt.pcolormesh(x2,y2,np.swapaxes(intensity,0,1),cmap='rainbow',vmin=0,vmax=1)
     c = colorbar(mappable)
@@ -33,7 +33,7 @@ def Colormap(ax,lst):
     ax.set_xlabel('$\mathrm{time \cdot J_{max}}$',fontsize=20)
     ax.tick_params(axis='y', labelsize=20)
     ax.tick_params(axis='x', labelsize=20)
-    
+
     #SET Y-AXIS TICKS AND LABEL
     ax.set_ylim([0,y])
     start, end = ax.get_ylim()

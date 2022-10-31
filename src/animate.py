@@ -188,7 +188,7 @@ for index in range(0, len(genomes), skip):
 
     # Write the generation title above it
     draw1 = ImageDraw.Draw(im1)
-    fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeSans.ttf", textSize)
+    fnt = ImageFont.load_default()
     draw1.text((im1.size[0]/2-textSize*2.8,padding/2), "generation " + str(index), font=fnt, fill=(0,0,0))
 
     # Draw a heatmap bar

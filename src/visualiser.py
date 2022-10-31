@@ -117,7 +117,7 @@ class Application(tk.Frame):
         self.genome_string.delete(1.0, tk.END)
         if len(new_genome) > 2:
             self.genome_string.insert(tk.END, '"' + new_genome + '"')
-            
+
     # Given a genome string, create a visualisation of the network
     def load_from_genome(self, gen):
 
@@ -424,7 +424,7 @@ class Application(tk.Frame):
 
     # Redraw all of the lines between nodes
     def draw_connections(self):
-        
+
         # Clear the canvas
         self.top_frame.delete("all")
         self.top_frame.create_rectangle([0, 0, width, height], fill="white", outline="white")
@@ -540,7 +540,7 @@ class Application(tk.Frame):
 
         # For each connection
         for con in self.connections:
-        
+
             # Turn the indexes into ASCII
             aLetter = self.get_node_with_id(con["a"]).letter
             bLetter = self.get_node_with_id(con["b"]).letter

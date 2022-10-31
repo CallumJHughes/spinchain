@@ -31,8 +31,8 @@ logical, parameter :: squared = .false.
 
 !*Define couplings scheme*!:
 !* Check one *!
-logical, parameter :: uniform = .false.
-logical, parameter :: pst = .true.
+logical, parameter :: uniform = .true.
+logical, parameter :: pst = .false.
 logical, parameter :: ssh_a = .false.
 logical, parameter :: ssh_b = .false.
 logical, parameter :: abc = .false.
@@ -112,9 +112,9 @@ real(kind=dbl)            :: time_scale               = -0.001_dbl
 !!Basic characteristics of the system *
 !**************************************
 
-integer            :: N = 7            ! Size of the system
+integer            :: N = 4            ! Size of the system
 integer            :: exno = 1         ! Total number of excitations
-integer, parameter :: branches = 5     ! Number of branches, if linear set to 1.
+integer, parameter :: branches = 1     ! Number of branches, if linear set to 1.
 
 ! The initial/target excitation vectors and their sizes
 ! GO TO BOTTOM TO DEFINE THESE
@@ -170,7 +170,7 @@ logical, parameter :: max_eof = .false. !calculates the maximum eof over
                                       !a time window = totalTime
 
 !qubits to trace for EOF
-integer, parameter :: Q1 = 1
+integer, parameter :: Q1 = 3
 integer, parameter :: Q2 = 4
 
 
