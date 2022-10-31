@@ -4,6 +4,16 @@ import re
 import sys
 from pylab import *
 import cmath
+import subprocess
+
+#GET TARGET QUBIT LABEL FROM custom_string VARIABLE WRITTEN TO genetic.out FILE
+gen = subprocess.check_output("sed -n '23p' genetic.out", shell=True)
+
+for char in range(len(gen)):
+	if gen[char] == 124: # Checks for '|' symbol using ASCII code
+		target = chr(gen[char+1]) # Character after '|' is target qubit label. Also converts ASCII code to char using chr() function
+	else:
+		continue
 
 #CHANGE FORMAT FOR THE COMPLEX NUMBERS FORTRAN->PYTHON
 input=open('dynamics.data','r')
@@ -80,7 +90,7 @@ y2 = (np.absolute(final))**2
 # for i in range(len(x)):
     # print(x[i], y1[i], y2[i])
 plt.plot(x,y1,color='gray',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{o}\rangle|^2$')
-plt.plot(x,y2,color='black',ls=':',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{A}\rangle|^2$') ##### target state
+plt.plot(x,y2,color='black',ls=':',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{subscript}\rangle|^2$'.format(subscript=target))
 
 #SET SIZE OF AXIS TICKS
 ax1.tick_params(axis='y', labelsize=20)
