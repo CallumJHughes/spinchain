@@ -165,8 +165,8 @@ real(kind=dbl) :: t_A = 4  !time for single point calculation (set single option
 !****************
 
 !choose your measure
-logical, parameter :: eof = .true.
-logical, parameter :: max_eof = .true. !calculates the maximum eof over
+logical, parameter :: eof = .false.
+logical, parameter :: max_eof = .false. !calculates the maximum eof over
                                       !a time window = totalTime
 
 !qubits to trace for EOF
