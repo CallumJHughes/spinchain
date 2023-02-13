@@ -91,8 +91,8 @@ for i in range(numF):
     final = final + np.conj(finalCoeffs[i]) * fidelity[:, finalIndexes[i]]
 
 #PLOT FIDELITY AGAINST INITIAL STATE AND TARGET STATE (CHANGE WHENEVER)
-y1 = (np.absolute(init))**2
-y2 = (np.absolute(final))**2
+y1 = init # init (np.absolute(init))**2
+y2 = final # final (np.absolute(final))**2
 # for i in range(len(x)):
     # print(x[i], y1[i], y2[i])
 plt.plot(x,y1,color='gray',lw=2,label=r'$|\langle\Psi(t)\vert \psi_{o}\rangle|^2$')
