@@ -63,7 +63,7 @@ logical :: graphical = .true.
 !*************************************!
 
 ! Should a genetic algorithm be used to perfect the coupling strengths?
-logical                   :: use_genetic              = .true.
+logical                   :: use_genetic              = .false.
 
 ! Number of networks being tested each generation
 integer                   :: genomes_per_generation   = 1024
