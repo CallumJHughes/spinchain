@@ -308,7 +308,9 @@ subroutine process_directives(string, init_direct, pos_direct)
 		if (string(i:i) == char(33)) then
 			zero_direct = .TRUE.
 		end if
-	 print *, "ZERO DIRECTIVE:", zero_direct
+	end do
+
+	print *, "ZERO DIRECTIVE:", zero_direct
 	!----------------------------------------------------------------------------------------------------------------------------
 
     i = 1
