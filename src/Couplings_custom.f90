@@ -306,11 +306,19 @@ subroutine process_directives(string, init_direct, pos_direct)
 
 	! Add 00 state feature here
 	!----------------------------------------------------------------------------------------------------------------------------
-	zero_direct = .FALSE.
+	zero_direct = .false.
+	i = 1
 	do while (i <= len_trim(string))
 		if (string(i:i) == char(37)) then
-			zero_direct = .TRUE.
+			zero_direct = .true.
+
+			string = trim(string(:i-1)) // trim(string(i+1:))
+			i = i - 1
+		else
+			zero_direct = .false.
 		end if
+
+		i = i + 1
 	end do
 
 	print *, "ZERO DIRECTIVE:", zero_direct
