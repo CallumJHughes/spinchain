@@ -308,7 +308,7 @@ subroutine process_directives(string, init_direct, pos_direct)
 	!----------------------------------------------------------------------------------------------------------------------------
 	zero_direct = .FALSE.
 	do while (i <= len_trim(string))
-		if (string(i:i) == char(33)) then
+		if (string(i:i) == char(37)) then
 			zero_direct = .TRUE.
 		end if
 	end do
