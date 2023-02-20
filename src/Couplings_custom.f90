@@ -300,6 +300,8 @@ subroutine process_directives(string, init_direct, pos_direct)
 
     end do
 
+	! Add 00 state feature here
+
     i = 1
     in_time_direct = .false.
     bracket_start = 0
