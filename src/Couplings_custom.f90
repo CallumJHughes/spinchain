@@ -235,6 +235,10 @@ subroutine process_directives(string, init_direct, pos_direct)
     character(20) :: coeff_substring
     logical :: in_brackets, in_time_direct
 
+	!------------------------------------------------------------------------------
+	logical :: zero_direct
+	!------------------------------------------------------------------------------
+
     ! If present, reset the return vals
     if (present(init_direct)) init_direct = ""
     if (present(pos_direct)) pos_direct = ""
@@ -302,7 +306,6 @@ subroutine process_directives(string, init_direct, pos_direct)
 
 	! Add 00 state feature here
 	!----------------------------------------------------------------------------------------------------------------------------
-	logical :: zero_direct
 	zero_direct = .FALSE.
 	do while (i <= len_trim(string))
 		if (string(i:i) == char(33)) then
