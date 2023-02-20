@@ -301,6 +301,15 @@ subroutine process_directives(string, init_direct, pos_direct)
     end do
 
 	! Add 00 state feature here
+	!----------------------------------------------------------------------------------------------------------------------------
+	logical :: zero_direct
+	zero_direct = .FALSE.
+	do while (i <= len_trim(string))
+		if (string(i:i) == char(33)) then
+			zero_direct = .TRUE.
+		end if
+	 print *, "ZERO DIRECTIVE:", zero_direct
+	!----------------------------------------------------------------------------------------------------------------------------
 
     i = 1
     in_time_direct = .false.
