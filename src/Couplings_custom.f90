@@ -309,13 +309,13 @@ subroutine process_directives(string, init_direct, pos_direct)
 	zero_direct = .false.
 	i = 1
 	do while (i <= len_trim(string))
-		if (string(i:i) == char(37)) then
+		if (string(i:i) == "%") then
 			zero_direct = .true.
 
 			string = trim(string(:i-1)) // trim(string(i+1:))
 			i = i - 1
-		else
-			zero_direct = .false.
+		!else
+			!zero_direct = .false.
 		end if
 
 		i = i + 1
