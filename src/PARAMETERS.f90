@@ -113,7 +113,7 @@ real(kind=dbl)            :: time_scale               = -0.001_dbl
 !**************************************
 
 integer            :: N = 4            ! Size of the system
-integer            :: exno = 1         ! Total number of excitations
+integer            :: exno = 2         ! Total number of excitations
 integer, parameter :: branches = 1     ! Number of branches, if linear set to 1.
 
 ! The initial/target excitation vectors and their sizes

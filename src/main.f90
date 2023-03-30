@@ -315,7 +315,7 @@ endif
 allocate(vectors_ex(exno))
 
 ! Determine the sizes
-vectorstotal = 0
+vectorstotal = 1 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 do i = 1, exno
     vectors_ex(i) = 1
     do j = N+1-i, N
