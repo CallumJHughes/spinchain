@@ -169,6 +169,7 @@ subroutine get_char_map(string, map)
         ! Skip the letter if it's a digit or a dash
         if (scan(string(i:i), "0123456789-i+.()[]>") > 0) cycle
 
+
         ! See if the letter is unique
         found = .false.
         do j = 1, numUniqueChars
@@ -427,11 +428,23 @@ subroutine process_directives(string, init_direct, pos_direct)
     coeff_substring = ""
     in_brackets = .false.
 
+    print *, initVectorFull
+    print *, ""
+    
+    print *, "map: ", map
+	print *, "size map: ", size(map)
+
+	do i = 1, 3
+		print *, "INtial InitVectorFull: ", initVectorFull(1,i,:)
+	end do
+	
     ! For each mode
     do i = 1, numModes
 
         numICount = 1
         numFCount = 1
+
+        print *, "from_string(i): ", from_string(i)
 
         ! Go through each char on the left of the divider
         do j = 1, len_trim(from_string(i))
@@ -446,6 +459,8 @@ subroutine process_directives(string, init_direct, pos_direct)
                         exit
                     end if
                 end do
+
+                !!!print *, "initVectorFull: ", initVectorFull(i,numICount,:)
 
             ! Otherwise, if a minus (only if first), a plus (only in brackets) or anything else
             else if ((from_string(i)(j:j) == "-" .and. j == 1) .or. scan(from_string(i)(j:j), "+-") == 0&
@@ -603,6 +618,14 @@ subroutine get_vector_indices(allVectors)
             end do
 
         end do 
+
+        do j = 1, numI
+        	print *, initVectorFull(l,j,:)
+        end do
+
+        print *, size(allVectors,1)
+
+        initialVec(l,numI+1) = 11
 
     end do 
 
