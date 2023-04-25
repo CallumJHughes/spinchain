@@ -358,7 +358,7 @@ subroutine process_directives(string, init_direct, pos_direct)
 
             string = trim(string(:i-1)) // trim(string(i+1:))
             i = i - 1
-            end if
+        end if
 
             i = i + 1
 
@@ -406,6 +406,12 @@ subroutine process_directives(string, init_direct, pos_direct)
 
     end do
 
+    ! If zero excitation sub-space is to be included in initial and target states, then increase number of states by one
+    if (zero_direct) then
+        numI = numI + 1
+        numF = numF + 1
+    end if
+
     ! Allocate the arrays
     if (allocated(initialVec)) deallocate(initialVec)
     if (allocated(targetVec)) deallocate(targetVec)
@@ -427,17 +433,7 @@ subroutine process_directives(string, init_direct, pos_direct)
     targetCoeff = cmplx(1.0_dbl, 0.0_dbl, dbl)
     coeff_substring = ""
     in_brackets = .false.
-
-    print *, initVectorFull
-    print *, ""
     
-    print *, "map: ", map
-	print *, "size map: ", size(map)
-
-	do i = 1, 3
-		print *, "INtial InitVectorFull: ", initVectorFull(1,i,:)
-	end do
-	
     ! For each mode
     do i = 1, numModes
 
@@ -460,7 +456,6 @@ subroutine process_directives(string, init_direct, pos_direct)
                     end if
                 end do
 
-                !!!print *, "initVectorFull: ", initVectorFull(i,numICount,:)
 
             ! Otherwise, if a minus (only if first), a plus (only in brackets) or anything else
             else if ((from_string(i)(j:j) == "-" .and. j == 1) .or. scan(from_string(i)(j:j), "+-") == 0&
@@ -618,14 +613,6 @@ subroutine get_vector_indices(allVectors)
             end do
 
         end do 
-
-        do j = 1, numI
-        	print *, initVectorFull(l,j,:)
-        end do
-
-        print *, size(allVectors,1)
-
-        initialVec(l,numI+1) = 11
 
     end do 
 
