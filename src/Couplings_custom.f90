@@ -305,24 +305,6 @@ subroutine process_directives(string, init_direct, pos_direct)
 
     end do
 
-	! Add 00 state feature here
-	!----------------------------------------------------------------------------------------------------------------------------
-	!zero_direct = .false.
-	!i = 1
-	!do while (i <= len_trim(string))
-	!	if (string(i:i) == "%") then
-	!		zero_direct = .true.
-
-	!		string = trim(string(:i-1)) // trim(string(i+1:))
-	!		i = i - 1
-	!	end if
-
-	!	i = i + 1
-	!end do
-
-	!print *, "ZERO DIRECTIVE:", zero_direct
-	!----------------------------------------------------------------------------------------------------------------------------
-
     i = 1
     in_time_direct = .false.
     zero_direct = .false.
@@ -360,11 +342,9 @@ subroutine process_directives(string, init_direct, pos_direct)
             i = i - 1
         end if
 
-            i = i + 1
+        i = i + 1
 
     end do
-
-    print *, "ZERO DIRECTIVE:", zero_direct
 
     ! Get the time for single point
     if (len_trim(time_direct_string) >= 1) then
