@@ -236,9 +236,8 @@ subroutine process_directives(string, init_direct, pos_direct)
     character(20) :: coeff_substring
     logical :: in_brackets, in_time_direct
 
-	!------------------------------------------------------------------------------
+	! Checking whether or not to include zero states
 	logical :: zero_direct
-	!------------------------------------------------------------------------------
 
     ! If present, reset the return vals
     if (present(init_direct)) init_direct = ""
