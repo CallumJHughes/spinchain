@@ -490,6 +490,7 @@ if (output .and. .not. use_genetic) then
     write(40,FMT=200) 'HAMILTONIAN MATRIX:'
     do i=1,vectorstotal
         write(40,"(30(I0,A))") (ceiling(hami(i,j))," ",j=1,vectorstotal)
+        ! write(40,"(30(F5.1,A))") (hami(i,j)," ",j=1,vectorstotal)
     enddo
 endif
 

@@ -214,7 +214,7 @@ subroutine process_directives(string, init_direct, pos_direct)
     character(max_string_size), intent(inout), optional :: init_direct, pos_direct
 
     ! The various temporary strings used for processing the directives
-    character(max_string_size) :: substring, time_direct_string
+    character(max_string_size) :: substring, time_direct_string, zero_direct_string
     character(max_string_size), dimension(:), allocatable :: from_string, to_string
 
     ! The stored character map (from chars to node index)
@@ -237,7 +237,7 @@ subroutine process_directives(string, init_direct, pos_direct)
     logical :: in_brackets, in_time_direct
 
 	! Checking whether or not to include zero states
-	logical :: zero_direct
+	logical :: zero_direct, truth_zero
 
     ! If present, reset the return vals
     if (present(init_direct)) init_direct = ""
@@ -263,6 +263,7 @@ subroutine process_directives(string, init_direct, pos_direct)
     if (allocated(from_string)) deallocate(from_string)
     allocate(from_string(numModes))
     time_direct_string = ""
+    zero_direct_string = ""
 
     ! Loop over the chars in the string (i may be modified in the loop)
     i = 1
@@ -307,13 +308,13 @@ subroutine process_directives(string, init_direct, pos_direct)
     i = 1
     in_time_direct = .false.
     zero_direct = .false.
+    truth_zero = .false.
     bracket_start = 0
     do while (i <= len_trim(string))
 
         if (string(i:i) == "@") then
 
             in_time_direct = .true.
-            bracket_start = i
 
             ! Remove this char from the string
             string = trim(string(:i-1)) // trim(string(i+1:))
@@ -333,12 +334,27 @@ subroutine process_directives(string, init_direct, pos_direct)
 
         end if
 
-        ! Checks if zero states should be included in simluation or not (Better symbol?)
+        ! Checks if zero states should be included in simulation
         if (string(i:i) == "%") then
             zero_direct = .true.
+            truth_zero  = .true.
+            bracket_start = i
 
             string = trim(string(:i-1)) // trim(string(i+1:))
             i = i - 1
+
+        else if (truth_zero .and. ((ichar(string(i:i)) >= 48 .and. ichar(string(i:i)) <= 57))) then !.or. string(i:i) == ".")
+
+            zero_direct_string = trim(zero_direct_string) // trim(string(i:i))
+
+            ! Remove this char from the string
+            string = trim(string(:i-1)) // trim(string(i+1:))
+            i = i - 1
+
+        else
+
+            truth_zero = .false.
+
         end if
 
         i = i + 1
@@ -408,8 +424,8 @@ subroutine process_directives(string, init_direct, pos_direct)
     ! Init things
     initVectorFull = 0
     finalVectorFull = 0
-    initialCoeff = cmplx(1.0_dbl, 0.0_dbl, dbl)
-    targetCoeff = cmplx(1.0_dbl, 0.0_dbl, dbl)
+    initialCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl) !!!!!!!!!!
+    targetCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl) !!!!!!!!!!!
     coeff_substring = ""
     in_brackets = .false.
     
@@ -418,8 +434,6 @@ subroutine process_directives(string, init_direct, pos_direct)
 
         numICount = 1
         numFCount = 1
-
-        print *, "from_string(i): ", from_string(i)
 
         ! Go through each char on the left of the divider
         do j = 1, len_trim(from_string(i))
@@ -462,7 +476,7 @@ subroutine process_directives(string, init_direct, pos_direct)
 
                 ! If adding because of a minus, add the minus to the next elements coeff substring
                 if (from_string(i)(j:j) == "-") then
-                    coeff_substring = "-"
+                    coeff_substring = trim(coeff_substring) // trim(from_string(i)(j:j))
                 end if
 
                 numICount = numICount + 1
@@ -470,6 +484,11 @@ subroutine process_directives(string, init_direct, pos_direct)
             end if
 
         end do
+
+        ! If zero excitation subspace has coefficient set final value in initialCoeff to this coefficient 
+        if (len_trim(zero_direct_string) > 0) then
+            initialCoeff(i, size(initialCoeff)) = string_to_complex(zero_direct_string)
+        end if
 
         ! Go through each char on the right of the divider
         do j = 1, len_trim(to_string(i))
@@ -521,9 +540,16 @@ subroutine process_directives(string, init_direct, pos_direct)
 
         end do
 
-        ! Since it was easier to start on 1 rather than 0
-        numICount = numICount - 1
-        numFCount = numFCount - 1
+        ! If zero excitation subspace has coefficient set final value in targetCoeff to this coefficient 
+        if (len_trim(zero_direct_string) > 0) then
+            targetCoeff(i, size(initialCoeff)) = string_to_complex(zero_direct_string)
+        end if
+
+        ! Since it was easier to start on 1 rather than 0]
+        if (.not. zero_direct) then
+            numICount = numICount - 1
+            numFCount = numFCount - 1
+        end if
 
         ! Normalise the vectors
         initialCoeff(i, 1:numICount) = initialCoeff(i, 1:numICount) / &
@@ -649,8 +675,9 @@ function string_to_complex(string)
 
             ! Read into the corresponding section (a+ib)
             if (is_imag) then
+               b = 1.0_dbl
                read(substring, *) b_temp
-               b = b + b_temp
+               b = b * b_temp
             else
                if (trim(substring) == "-") substring = "-1"
                read(substring, *) a_temp

@@ -20,7 +20,7 @@ logical :: stop_after_time = .false.
 logical :: stop_after_time_full = .false.
 
 ! Should the program produce a data file for an animated figure
-logical :: create_animation = .false.
+logical :: create_animation = .true.
 
 !*Define chain topology*!:
 !* Check one *!

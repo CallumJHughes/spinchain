@@ -31,7 +31,8 @@ ax.set_xlim([0,totaltime])
 ax.set_ylim([0,1])
 
 #DEFINE STATE TO MEASURE FIDELITY AGAINST TO
-f=(np.absolute((fidelity[:,9])+(fidelity[:,10])+(fidelity[:,14])+(fidelity[:,15]))/2.)**2
+# f=(np.absolute((fidelity[:,9])+(fidelity[:,10])+(fidelity[:,14])+(fidelity[:,15]))/2.)**2
+f=(np.absolute((fidelity[:,1])+(fidelity[:,5])+(fidelity[:,9])+(fidelity[:,16]))/2.)**2
 
 #PLOT FIDELITY AGAINST ANY STATE F
 plt.plot(np.absolute(fidelity[:,0]),f,color='red',lw=2,ls='-',markevery=500,label=r'$|\langle\Psi(0)|\Psi(t)\rangle|^2$')
