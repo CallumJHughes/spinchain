@@ -424,8 +424,8 @@ subroutine process_directives(string, init_direct, pos_direct)
     ! Init things
     initVectorFull = 0
     finalVectorFull = 0
-    initialCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl) !!!!!!!!!!
-    targetCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl) !!!!!!!!!!!
+    initialCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl)
+    targetCoeff = cmplx(0.0_dbl, 0.0_dbl, dbl)
     coeff_substring = ""
     in_brackets = .false.
     
